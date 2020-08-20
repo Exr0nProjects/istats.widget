@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Roland Schaer
+ * Copyright 2019 Roland Schaer, Exr0n
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -40,8 +40,8 @@ const config = {
     tempUnit: 'F',
     /* Widget position */
     position: 'top-left',
-    top: '320px',
-    left: '14px',
+    top: '900px',
+    left: '0px',
     bottom: '0px',
     right: '0px',
     /* Stat position */
@@ -50,7 +50,7 @@ const config = {
     radius: '18',
     strokeWidth: '2',
     /* Stat  color */
-    gradient: true,
+    gradient: true, // whether to enable the automated gradient. Overrides color when true
     color: '#ccc',
     /* Stat icon sizes */
     iconSize: '1.0rem',

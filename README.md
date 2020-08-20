@@ -7,10 +7,16 @@
 
 Made for [Übersicht](http://tracesof.net/uebersicht/).
 
-Uses the [iStats Ruby Gem](https://github.com/Chris911/iStats "iStats") to obtain SMC information about your system.
+**An extension of the original iStats Widget with colors, transitions, and more uses.**
 
-![](screenshot.png)
+This fork attempts to generalize the classic donut chart to more use cases, such as clocks, todo list completion, weather, song/playlist status, and more.
 
+
+![](demo.gif)
+
+(random percentages to demonstrate transitions)
+
+Original README:
 ## Installation
 
 ### Prerequisites
