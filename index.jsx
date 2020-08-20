@@ -26,6 +26,7 @@ import Stats from './src/components/Stats.jsx';
  * Configuration values
  */
 const config = {
+    _weather_data: {prev_timestamp: 0 }, // TODO: this is terrible practice
     /* Enable animations */
     animations: true,
     /* Available stat keys, in order of rendering */
@@ -52,13 +53,24 @@ const config = {
             'title': 'weather-temp',
             'key': 'weather-temp',
             'percentage': () => {
-                const key = require('../../secrets.json').weatherkey'17643c253bde82aeec5bdf6cd7e0e661';
+                const key = require('./secrets.json').weatherkey;
+                if (Date.now() - config._weather_data.prev_timestamp > 1000*600) {
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        config._weather_data.prev_timestamp = Date.now();
+                        const c = pos.position.coords;
+                        fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${c.latitude}&lon=${c.longitude}&APPID=${key}`)
+                            .then(res => res.json())
+                            .then(json => { config._weather_data.prev_value = json })
+                            .then(() => console.log(config._weather_data.prev_value))
+                            .catch(console.error);
+                    });
+                }
+                return config._weather_data.prev_value ? (config._weather_data.prev_value.list[0].main.temp-273.15)*2 : 0;
             },
-            'text': () => 'howdy',
+            'text': () => '' + (config._weather_data.prev_value ? Math.floor((config._weather_data.prev_value.list[0].main.temp-273.15)*9/5+32) : 0) + 'ºF',
             'icon': () => 'icon-clockalt-timealt',
-            'highcolor': [0, 0, 0],
-            'lowcolor': [0, 0, 0],
-            'prev_timestamp': 0
+            'highcolor': [255, 0, 0],
+            'lowcolor': [0, 0, 255],
         },
         'cpu.cpu-temp',
         'extra.tcgc-peci-gpu-temp',
