@@ -30,6 +30,19 @@ const config = {
     animations: true,
     /* Available stat keys, in order of rendering */
     stats: [
+        {
+            'key': 'time-of-day',
+            'percentage': () => {
+                const dt = new Date();
+                const secs = dt.getSeconds() + (60 * (dt.getMinutes() + (60 * dt.getHours())));
+                return Math.round(secs/24*60*60*100);
+            },
+            'text': () => {
+                const dt = new Date();
+                return `${dt.getHours()}:${dt.getMinutes()}`;
+            },
+            'icon': () => 'clock'
+        },
         'cpu.cpu-temp',
         'extra.tcgc-peci-gpu-temp',
         'fan.fan-0-speed',
