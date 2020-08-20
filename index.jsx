@@ -31,17 +31,22 @@ const config = {
     /* Available stat keys, in order of rendering */
     stats: [
         {
+            'is_custom': true,
+            'title': 'time-of-day',
             'key': 'time-of-day',
             'percentage': () => {
                 const dt = new Date();
                 const secs = dt.getSeconds() + (60 * (dt.getMinutes() + (60 * dt.getHours())));
-                return Math.round(secs/24*60*60*100);
+                console.log(secs, Math.round(secs/24/60/60*100));
+                return Math.round(secs/24/60/60*100);
             },
             'text': () => {
                 const dt = new Date();
                 return `${dt.getHours()}:${dt.getMinutes()}`;
             },
-            'icon': () => 'clock'
+            'icon': 'clock',
+            'lowcolor': [0xcc, 0xcc, 0xcc],
+            'highcolor': [0xcc, 0xcc, 0xcc]
         },
         'cpu.cpu-temp',
         'extra.tcgc-peci-gpu-temp',
