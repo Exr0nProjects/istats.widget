@@ -27,13 +27,12 @@ class Stat extends React.Component {
     }
 
     render() {
-        if (!this.props.percentage) return ('');
-
         const c = Math.floor(2 * Math.PI * this.props.config.radius);
         const p = c / 100 * this.props.percentage;
         let color = this.props.config.color;
-        if (this.props.config.gradient) {
-            color = `rgb(${this.props.lowcolor.map((v, i) => (v * (100-p) + this.props.highcolor[i]*p)/100).join(' ')})`;
+        if (this.props.lowcolor) {
+            color = this.props.lowcolor.map((v, i) => (v * (100-p) + this.props.highcolor[i]*p)/100);
+            color = `rgb(${color.join(' ')})`;
         }
 
         //TODO: Configure things around radius
@@ -44,14 +43,14 @@ class Stat extends React.Component {
         // radius = r - stroke-width / 2
 
         return (
-            <div className={"stat " + this.props.title}>
-                <i className={"icon " + this.props.icon} style={{ fontSize: this.props.config.iconSize, lineHeight: this.props.config.iconLineHeight }}></i>
+            <div className={`stat ${this.props.title}`}>
+                <i className={`icon ${this.props.icon}`} style={{ fontSize: this.props.config.iconSize, lineHeight: this.props.config.height+'px' }}></i>
                 <svg width={this.props.config.width} height={this.props.config.height}>
                     <circle r="0" />;   // not sure why we need this extra circle
-                    <circle r={this.props.config.radius - (this.props.config.strokeWidth / 2)}
+            {p ? <circle r={this.props.config.radius - (this.props.config.strokeWidth / 2)}
                             cx={this.props.config.width / 2}
                             cy={this.props.config.height / 2}
-                            style={{ stroke: color, strokeWidth: this.props.config.strokeWidth, strokeDasharray: p + ' ' + c }} />
+                            style={{ stroke: color, strokeWidth: this.props.config.strokeWidth, strokeDasharray: p + ' ' + c }} /> : ''}
                 </svg>
                 <div className="text" style={{ fontSize: this.props.config.labelSize }}>{this.props.value}</div>
             </div>

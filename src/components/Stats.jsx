@@ -189,41 +189,47 @@ class Stats extends React.Component {
             position = this.getPosition(config),
             parsedData = IStatsParser.parse(this.props.output),
             data = Transformer.transform(parsedData),
-            stats = config.stats
-                .filter(item => {
-                    let key = this.isObject(item) ? item.key : item,
-                        ref = this.getRef(key);
-                    return item.is_custom || (data[ref.obj] && data[ref.obj][ref.prop]);
-                })
-                .map(item => {
-                    if (typeof item === 'object' && item.is_custom) {
-                        return <Stat
-                            config={config}
-                            title={item.title}
-                            icon={typeof item.icon == 'function' ? item.icon() : item.icon}
-                            key={typeof item.key == 'function' ? item.key() : item.key}
-                            value={typeof item.text == 'function' ? item.text() : item.text}
-                            percentage={typeof item.percentage == 'function' ? item.percentage() : item.percentage}
-                            lowcolor={item.lowcolor}
-                            highcolor={item.highcolor}
-                        />
-                    } else {
-                        let key = this.isObject(item) ? item.key : item;
-                        this.resetFanAnimation(data, key);
+            stats = config.stats.map(v =>
+                <div className="stats-row">
+                    {
+                        v.filter(item => {
+                            if (item.is_custom) return true;
+                            let key = this.isObject(item) ? item.key : item,
+                                ref = this.getRef(key);
+                            return data[ref.obj] && data[ref.obj][ref.prop];
+                        })
+                        .map(item => {
+                            if (typeof item === 'object' && item.is_custom) {
+                                return <Stat
+                                    config={config}
+                                    title={item.title}
+                                    icon={typeof item.icon == 'function' ? item.icon() : item.icon}
+                                    key={typeof item.key == 'function' ? item.key() : item.key}
+                                    value={typeof item.text == 'function' ? item.text() : item.text}
+                                    percentage={typeof item.percentage == 'function' ? item.percentage() : item.percentage}
+                                    lowcolor={item.lowcolor}
+                                    highcolor={item.highcolor}
+                                />
+                            } else {
+                                let key = this.isObject(item) ? item.key : item;
+                                this.resetFanAnimation(data, key);
 
-                        return <Stat
-                            config={config}
-                            title={this.getClassName(key)}
-                            icon={this.isObject(item) ? (item.icon || this.DEFAULT_ICON ) : this.getIcon(data, key)}
-                            percentage={this.getPercentage(data, key)}
-                            //percentage={Math.random()*100}
-                            lowcolor={this.getRef(key).obj === 'battery' ? [0xf5, 0x38, 0x1b] : [0x6c, 0xad, 0x50]}
-                            highcolor={this.getRef(key).obj === 'battery' ? [0x6c, 0xad, 0x50] : [0xf5, 0x38, 0x1b]}
-                            key={key}
-                            value={this.getValue(data, key)}
-                        />
+                                return <Stat
+                                    config={config}
+                                    title={this.getClassName(key)}
+                                    icon={this.isObject(item) ? (item.icon || this.DEFAULT_ICON ) : this.getIcon(data, key)}
+                                    percentage={this.getPercentage(data, key)}
+                                    //percentage={Math.random()*100}
+                                    lowcolor={this.getRef(key).obj === 'battery' ? [0xf5, 0x38, 0x1b] : [0x6c, 0xad, 0x50]}
+                                    highcolor={this.getRef(key).obj === 'battery' ? [0x6c, 0xad, 0x50] : [0xf5, 0x38, 0x1b]}
+                                    key={key}
+                                    value={this.getValue(data, key)}
+                                />
+                            }
+                        })
                     }
-                });
+                </div>
+            );
 
             if (config.position
                     && config.position.match(/(top|bottom)-(left|right)/)) {
