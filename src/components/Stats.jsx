@@ -204,6 +204,9 @@ class Stats extends React.Component {
                         title={this.getClassName(key)}
                         icon={this.isObject(item) ? (item.icon || this.DEFAULT_ICON ) : this.getIcon(data, key)}
                         percentage={this.getPercentage(data, key)}
+                        //percentage={Math.random()*100}
+                        lowcolor={this.getRef(key).obj === 'battery' ? [0xf5, 0x38, 0x1b] : [0x6c, 0xad, 0x50]}
+                        highcolor={this.getRef(key).obj === 'battery' ? [0x6c, 0xad, 0x50] : [0xf5, 0x38, 0x1b]}
                         key={key}
                         value={this.getValue(data, key)}
                     />

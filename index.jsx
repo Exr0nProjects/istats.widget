@@ -37,7 +37,7 @@ const config = {
         'battery.current-charge'
     ],
     /* Temperature unit, either 'C' or 'F' */
-    tempUnit: 'C',
+    tempUnit: 'F',
     /* Widget position */
     position: 'top-left',
     top: '320px',
@@ -50,7 +50,8 @@ const config = {
     radius: '18',
     strokeWidth: '2',
     /* Stat  color */
-    color: '#666',
+    gradient: true,
+    color: '#ccc',
     /* Stat icon sizes */
     iconSize: '1.0rem',
     iconLineHeight: '2.5rem',
@@ -66,7 +67,7 @@ export const command = '/usr/local/bin/istats';
 /**
  * Widget refresh frequency in milliseconds
  */
-export const refreshFrequency = 5000;
+export const refreshFrequency = 1000;
 
 export const className = `
     width: 100%;

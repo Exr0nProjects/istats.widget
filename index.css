@@ -48,6 +48,7 @@
 
 .stat circle {
   fill: transparent;
+  transition: stroke 0.2s linear, stroke-dasharray 0.2s linear;
 }
 
 .animation-fan-20 {
