@@ -47,6 +47,19 @@ const config = {
             'lowcolor': [0xcc, 0xcc, 0xcc],
             'highcolor': [0xcc, 0xcc, 0xcc]
         },
+        {
+            'is_custom': true,
+            'title': 'weather-temp',
+            'key': 'weather-temp',
+            'percentage': () => {
+                const key = require('../../secrets.json').weatherkey'17643c253bde82aeec5bdf6cd7e0e661';
+            },
+            'text': () => 'howdy',
+            'icon': () => 'icon-clockalt-timealt',
+            'highcolor': [0, 0, 0],
+            'lowcolor': [0, 0, 0],
+            'prev_timestamp': 0
+        },
         'cpu.cpu-temp',
         'extra.tcgc-peci-gpu-temp',
         'fan.fan-0-speed',
