@@ -31,9 +31,8 @@ const config = {
     animations: true,
     /* Available stat keys, in order of rendering */
     stats: [
-        {
+        { 'title': 'time-of-day',
             'is_custom': true,
-            'title': 'time-of-day',
             'key': 'time-of-day',
             'percentage': () => {
                 const dt = new Date();
@@ -42,15 +41,14 @@ const config = {
             },
             'text': () => {
                 const dt = new Date();
-                return `${dt.getHours()}:${dt.getMinutes()}`;
+                return `${String(dt.getHours()).padStart(2)}:${String(dt.getMinutes()).padStart(2, '0')}`;
             },
             'icon': 'icon-clockalt-timealt',
             'lowcolor': [0xcc, 0xcc, 0xcc],
             'highcolor': [0xcc, 0xcc, 0xcc]
         },
-        {
+        { 'title': 'weather-temp',
             'is_custom': true,
-            'title': 'weather-temp',
             'key': 'weather-temp',
             'percentage': () => {
                 const key = require('./secrets.json').weatherkey;
@@ -68,7 +66,19 @@ const config = {
                 return config._weather_data.prev_value ? (config._weather_data.prev_value.list[0].main.temp-273.15)*2 : 0;
             },
             'text': () => '' + (config._weather_data.prev_value ? Math.floor((config._weather_data.prev_value.list[0].main.temp-273.15)*9/5+32) : 0) + 'ºF',
-            'icon': () => 'icon-clockalt-timealt',
+            'icon': () => {
+                if (!config._weather_data.prev_value) return 'icon-sun-day';
+                // TODO: untested... some icons may not work properly
+                switch (config._weather_data.prev_value.list[0].weather[0].main) {
+                    case 'Thunderstorm': return 'icon-lightningalt';
+                    case 'Rain':
+                    case 'Drizzle': return 'icon-rain';
+                    case 'Snow': return 'icon-snow';
+                    case 'Clouds': return 'icon-cloud';
+                    case 'Clear': return 'icon-sun-day';
+                }
+                return 'icon-warning-sign';
+            },
             'highcolor': [255, 0, 0],
             'lowcolor': [0, 0, 255],
         },
