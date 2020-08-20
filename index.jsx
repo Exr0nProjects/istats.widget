@@ -37,14 +37,13 @@ const config = {
             'percentage': () => {
                 const dt = new Date();
                 const secs = dt.getSeconds() + (60 * (dt.getMinutes() + (60 * dt.getHours())));
-                console.log(secs, Math.round(secs/24/60/60*100));
                 return Math.round(secs/24/60/60*100);
             },
             'text': () => {
                 const dt = new Date();
                 return `${dt.getHours()}:${dt.getMinutes()}`;
             },
-            'icon': 'clock',
+            'icon': 'icon-clockalt-timealt',
             'lowcolor': [0xcc, 0xcc, 0xcc],
             'highcolor': [0xcc, 0xcc, 0xcc]
         },
